@@ -9,6 +9,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
+    public const REDIO_USER = 'redio-user';
+
     private $passwordEncoder;
 
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
@@ -24,5 +26,7 @@ class UserFixtures extends Fixture
 
         $manager->persist($user);
         $manager->flush();
+
+        $this->addReference(self::REDIO_USER, $user);
     }
 }
