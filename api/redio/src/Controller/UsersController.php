@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DataObject\UserDataObject;
 use App\Service\UserService\UserServiceInterface;
 use App\Service\ValidatorService\ValidatorServiceInterface;
+use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,19 @@ class UsersController extends AbstractController
     /**
      * @Route("/api/users/{user_id}", name="users.show", methods="GET")
      *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns single user"
+     * )
+     * @SWG\Parameter(
+     *     name="user_id",
+     *     in="path",
+     *     required=true,
+     *     type="integer",
+     *     description="User id"
+     * )
+     * @SWG\Tag(name="users")
+     *
      * @param int $user_id
      * @return Response
      */
@@ -45,6 +59,26 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/api/users", name="users.store", methods="POST")
+     *
+     * @SWG\Response(
+     *     response=201,
+     *     description="Create new user"
+     * )
+     * @SWG\Parameter(
+     *     name="email",
+     *     in="formData",
+     *     required=true,
+     *     type="string",
+     *     description="User email"
+     * )
+     * @SWG\Parameter(
+     *     name="password",
+     *     in="formData",
+     *     required=true,
+     *     type="string",
+     *     description="User password"
+     * )
+     * @SWG\Tag(name="users")
      *
      * @param Request $request
      * @return Response
@@ -63,6 +97,33 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/api/users/{user_id}", name="users.update", methods="PUT")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Update single user data"
+     * )
+     * @SWG\Parameter(
+     *     name="user_id",
+     *     in="path",
+     *     required=true,
+     *     type="integer",
+     *     description="User id"
+     * )
+     * @SWG\Parameter(
+     *     name="email",
+     *     in="formData",
+     *     required=true,
+     *     type="string",
+     *     description="User email"
+     * )
+     * @SWG\Parameter(
+     *     name="password",
+     *     in="formData",
+     *     required=true,
+     *     type="string",
+     *     description="User password"
+     * )
+     * @SWG\Tag(name="users")
      *
      * @param Request $request
      * @param int $user_id
