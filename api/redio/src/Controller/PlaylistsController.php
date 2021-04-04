@@ -2,26 +2,34 @@
 
 namespace App\Controller;
 
+use App\DataObject\PlaylistDataObject;
 use App\Service\PlaylistService\PlaylistServiceInterface;
+use App\Service\ValidatorService\ValidatorServiceInterface;
 use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PlaylistsController extends AbstractController
 {
     private PlaylistServiceInterface $playlistService;
     private SerializerInterface $serializer;
+    private ValidatorInterface $validator;
+    private ValidatorServiceInterface $validatorService;
 
     public function __construct(
         PlaylistServiceInterface $playlistService,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        ValidatorInterface $validator,
+        ValidatorServiceInterface $validatorService
     ) {
         $this->playlistService = $playlistService;
         $this->serializer = $serializer;
+        $this->validator = $validator;
+        $this->validatorService = $validatorService;
     }
 
     /**
@@ -110,12 +118,19 @@ class PlaylistsController extends AbstractController
      * )
      * @SWG\Tag(name="playlists")
      *
+     *
      * @param Request $request
      * @return Response
      */
     public function store(Request $request): Response
     {
-        return new Response('TODO', Response::HTTP_CREATED);
+        $playlistDTO = $this->validatorService->validate($request, PlaylistDataObject::class);
+
+        if ($playlistDTO instanceof Response) return $playlistDTO;
+
+        $this->playlistService->create($playlistDTO);
+
+        return new Response('Playlist created', Response::HTTP_CREATED);
     }
 
     /**
@@ -171,7 +186,13 @@ class PlaylistsController extends AbstractController
      */
     public function update(Request $request, int $id): Response
     {
-        return new Response('TODO', Response::HTTP_OK);
+        $playlistDTO = $this->validatorService->validate($request, PlaylistDataObject::class);
+
+        if ($playlistDTO instanceof Response) return $playlistDTO;
+
+        $this->playlistService->update($playlistDTO, $id);
+
+        return new Response('Playlist updated', Response::HTTP_OK);
     }
 
     /**
@@ -195,6 +216,8 @@ class PlaylistsController extends AbstractController
      */
     public function delete(int $playlist_id): Response
     {
-        return new Response('TODO', Response::HTTP_OK);
+        $this->playlistService->delete($playlist_id);
+
+        return new Response('Playlist deleted', Response::HTTP_OK);
     }
 }
