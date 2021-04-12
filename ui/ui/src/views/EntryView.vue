@@ -1,15 +1,15 @@
 <template>
   <HomeView>
-    <Login></Login>
+    <Home></Home>
   </HomeView>
 </template>
 
 <script>
 import HomeView from "@/views/HomeView";
-import Login from "@/components/Login";
+import Home from "@/components/Home";
 export default {
-name: "LoginView" ,
-  components: {Login , HomeView}
+name: "EntryView" ,
+  components: {Home , HomeView}
 }
 </script>
 

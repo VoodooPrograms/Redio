@@ -22,7 +22,7 @@ export default {
 <style scoped>
 
 .button {
-  width: 213px;
+  width: 150px;
   height: 61px;
   background: 0 0 no-repeat padding-box;
   border-radius: 4px;
