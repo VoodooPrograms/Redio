@@ -1,19 +1,23 @@
 <template>
   <div class="login-box">
     <h2>Login</h2>
-    <form>
+    <form @submit.prevent="handleLogin">
       <div class="user-box">
-        <input type="text" name="" required="">
+        <input type="text" required=""
+               v-model="user.username"
+               class="form-control"
+               name="username">
         <label>Email</label>
       </div>
       <div class="user-box">
-        <input type="password" name="" required="">
+        <input type="password" required=""
+               v-model="user.password"
+               class="form-control"
+               name="password">
         <label>Password</label>
       </div>
       <div class="flex-line">
-        <router-link to="/">
           <Button msg="Submit" color="primary-color"></Button>
-        </router-link>
         <router-link to="/">
           <Button msg="Go back"></Button>
         </router-link>
@@ -24,10 +28,41 @@
 
 <script>
 import Button from "@/components/Button";
+import User from '../models/user';
+
 export default {
 name: "Login" ,
-  components: {Button}
-}
+  components: {Button},
+  data() {
+    return {
+      user: new User('', ''),
+      loading: false,
+      message: ''
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push('/profile');
+    }
+  },
+  methods: {
+    handleLogin() {
+      this.loading = true;
+        if (this.user.username && this.user.password) {
+          this.$store.dispatch('auth/login', this.user).then(
+              () => {
+                this.$router.push('/profile');
+              },
+          );
+        }
+    }
+  }
+};
 </script>
 
 <style scoped>

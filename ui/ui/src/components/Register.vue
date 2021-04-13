@@ -1,17 +1,32 @@
 <template>
   <div class="login-box">
     <h2>Register</h2>
-    <form>
+    <form @submit.prevent="handleRegister">
       <div class="user-box">
-        <input type="text" name="" required="">
+        <input
+            type="email"
+            required=""
+            v-model="user.email"
+            name="email"
+        >
         <label>Email</label>
       </div>
       <div class="user-box">
-        <input type="text" name="" required="">
+        <input
+            type="username"
+            required=""
+            v-model="user.username"
+            name="username"
+        >
         <label>Username</label>
       </div>
       <div class="user-box">
-        <input type="password" name="" required="">
+        <input
+            type="password"
+            required=""
+            v-model="user.password"
+            name="password"
+        >
         <label>Password</label>
       </div>
       <div class="user-box">
@@ -19,9 +34,7 @@
         <label>Confirm password</label>
       </div>
       <div class="flex-line">
-        <router-link to="/">
           <Button msg="Register" color="primary-color"></Button>
-        </router-link>
         <router-link to="/">
           <Button msg="Go back"></Button>
         </router-link>
@@ -31,11 +44,44 @@
 </template>
 
 <script>
+import User from '../models/user';
 import Button from "@/components/Button";
+
 export default {
   name: "Register" ,
-  components: {Button}
-}
+  components: {Button},
+  data() {
+    return {
+      user: new User('', '', ''),
+      submitted: false,
+      successful: false,
+      message: ''
+    };
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    }
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push('/profile');
+    }
+  },
+  methods: {
+    handleRegister() {
+      this.message = '';
+      this.submitted = true;
+      console.debug(this.user);
+          this.$store.dispatch('auth/register', this.user).then(
+              data => {
+                this.message = data.message;
+                this.successful = true;
+              }
+          );
+        }
+  }
+};
 </script>
 
 <style scoped>

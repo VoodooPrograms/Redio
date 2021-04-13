@@ -14,9 +14,14 @@ security:
             stateless: true
             anonymous: true
             json_login:
-                check_path: /api/login_check
+                check_path: /api/login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        register:
+            pattern: ^/api/register
+            stateless: true
+            anonymous: true
 
         swagger:
             pattern: ^/api/doc
@@ -31,6 +36,7 @@ security:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
     access_control:
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/doc, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/login,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/doc,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,          roles: IS_AUTHENTICATED_FULLY }
