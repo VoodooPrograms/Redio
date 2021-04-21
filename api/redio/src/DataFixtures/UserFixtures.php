@@ -23,6 +23,7 @@ class UserFixtures extends Fixture
         $user = new User();
         $user->setEmail('redio@redio.com');
         $user->setPassword($this->passwordEncoder->encodePassword($user, 'testowe123'));
+        $user->setNickname('redio-user');
 
         $manager->persist($user);
         $manager->flush();

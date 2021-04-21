@@ -40,10 +40,9 @@ router.beforeEach((to, from, next) => {
     // trying to access a restricted page + not logged in
     // redirect to login page
     if (authRequired && !loggedIn) {
-        next('/login');
-    } else {
-        next();
+        return next('/login');
     }
+    next();
 });
 
 export default router;
