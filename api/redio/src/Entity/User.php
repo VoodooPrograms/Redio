@@ -42,6 +42,12 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\Column(type="string", unique=true)
+     * @Groups({"index"})
+     */
+    private $nickname;
+
+    /**
      * @ORM\OneToMany(targetEntity=Playlist::class, mappedBy="user_id", orphanRemoval=true)
      */
     private $playlists;
@@ -137,6 +143,18 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getNickname(): string
+    {
+        return (string) $this->nickname;
+    }
+
+    public function setNickname(string $nickname): self
+    {
+        $this->nickname = $nickname;
+
+        return $this;
     }
 
     /**

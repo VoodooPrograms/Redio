@@ -14,7 +14,7 @@ final class Version20210323101956 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Create playlists_stats table';
     }
 
     public function up(Schema $schema) : void

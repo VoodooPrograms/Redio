@@ -71,4 +71,15 @@ export default {
 .full-screen .full-screen-right-side .btn-collection {
   justify-content: space-evenly;
 }
+
+@media only screen and (max-width: 768px) {
+  .full-screen .full-screen-right-side .full-screen-line {
+    width: 100%;
+  }
+
+  .header-excerpt {
+    text-align: center;
+    font: normal normal normal 48px Segoe UI;
+  }
+}
 </style>

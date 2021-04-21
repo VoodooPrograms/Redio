@@ -14,7 +14,7 @@ final class Version20210323123652 extends AbstractMigration
 {
     public function getDescription() : string
     {
-        return '';
+        return 'Create song table';
     }
 
     public function up(Schema $schema) : void

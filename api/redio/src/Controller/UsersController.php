@@ -59,6 +59,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/api/users", name="users.store", methods="POST")
+     * @Route("/api/register", name="users.register", methods="POST")
      *
      * @SWG\Response(
      *     response=201,

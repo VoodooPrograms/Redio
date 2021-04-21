@@ -26,4 +26,16 @@ class UserDataObject extends DataObject
      * )
      */
     public ?string $password;
+
+    /**
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 4,
+     *      max = 24,
+     *      minMessage = "Your password must be at least {{ limit }} characters long",
+     *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
+     * )
+     * @UniqueValueInEntity(entityClass="App\Entity\User", field="$nickname")
+     */
+    public ?string $nickname;
 }
