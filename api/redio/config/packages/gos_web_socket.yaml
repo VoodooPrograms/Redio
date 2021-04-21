@@ -1,0 +1,4 @@
+gos_web_socket:
+    server:
+        port: 8280        # The port the socket server will listen on
+        host: 127.0.0.1   # The host ip to bind to
