@@ -10,21 +10,23 @@ use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ChatController extends AbstractController
+{
+    /**
+     * @Route("/push", name="push")
+     * @param Request $request
+     * @param HubInterface $publisher
+     * @return Response
+     */
+    public function push(Request $request, HubInterface $publisher): Response
     {
-        /**
-         * @Route("/push", name="push")
-         * @param Request $request
-         * @param HubInterface $publisher
-         * @return Response
-         */
-        public function push(Request $request, HubInterface $publisher): Response
-        {
-            $result = $publisher->publish(new Update(
-                'https://example.com/my-private-topic',
-                json_encode(['message' => 'hello!'],
-                )
-            ));
+        $message = $request->query->get('message');
+        $result = $publisher->publish(
+            new Update(
+                'https://example.com/chat',
+                json_encode(['message' => $message],
+            )
+        ));
 
-            return $this->json('Done ' . $result);
-        }
+        return $this->json('Done ' . $result);
     }
+}
