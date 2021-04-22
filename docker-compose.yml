@@ -66,3 +66,18 @@ services:
             PHP_OPCACHE_VALIDATE_TIMESTAMPS: "true"
         depends_on:
             - mysql_db
+
+    mercure:
+        image: dunglas/mercure
+        environment:
+            MERCURE_PUBLISHER_JWT_KEY: '!ChangeMe!'
+            MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeMe!'
+            SERVER_NAME: ":80"
+        ports:
+            - "9090:80"
+        networks:
+            - redio_network
+        volumes:
+            - ./_data/caddy_data:/data
+            - ./_data/caddy_config:/config
+        command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev

@@ -35,8 +35,15 @@ security:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
+        push:
+            pattern: ^/push
+            stateless: true
+            anonymous: true
+
+
     access_control:
         - { path: ^/api/login,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/doc,      roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/push,         roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api,          roles: IS_AUTHENTICATED_FULLY }
