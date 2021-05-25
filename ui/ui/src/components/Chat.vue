@@ -1,19 +1,22 @@
 <template>
-  <form @submit.prevent="handleSendMessage">
+
+  <div class="chat-list">
+    <div class="chat-element" v-for="m in messages" v-bind:key="m">
+      {{ m.message }}
+    </div>
+  </div>
+
+  <form class="message-form" @submit.prevent="handleSendMessage">
     <div class="user-box">
       <input type="text" required=""
              v-model="chat.message"
-             class="form-control"
-             name="message">
+             class="message-input"
+             name="message"
+             placeholder="Type your message..."
+      >
     </div>
-      <Button msg="Submit" color="primary-color"></Button>
+      <Button class="message-submit" msg="Submit" color="primary-color"></Button>
   </form>
-
-  <ul>
-    <li v-for="m in messages" v-bind:key="m">
-      {{ m.message }}
-    </li>
-  </ul>
 
 </template>
 
@@ -61,5 +64,27 @@ export default {
 </script>
 
 <style scoped>
+
+.chat-list {
+  width: 600px;
+  height: 300px;
+  background-color: var(--bg-color);
+}
+
+.chat-list .chat-element {
+  color: var(--white);
+}
+
+.message-form {
+  width: 600px;
+  height: 40px;
+}
+
+.message-form .message-input {
+  width: 600px;
+  height: 40px;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 </style>
