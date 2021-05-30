@@ -5,8 +5,8 @@
       <div class="header-h1"><span class="color-red">RED</span><span class="color-grey">IO</span></div>
     </div>
     <div class="button-list">
-      <router-link to="/">Browse</router-link>
-      <router-link to="/">Dashboard</router-link>
+      <router-link to="/browse">Browse</router-link>
+      <router-link to="/dashboard">Dashboard</router-link>
     </div>
   </nav>
   <div id="menu-button" @click="handleHamburger">

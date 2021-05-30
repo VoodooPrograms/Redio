@@ -5,6 +5,7 @@ import About from "@/views/About.vue";
 import EntryView from "@/views/EntryView";
 import Chat from "@/components/Chat";
 import Browse from "@/views/Browse";
+import LiveView from "@/views/LiveView";
 
 const routes = [
     {
@@ -31,6 +32,11 @@ const routes = [
         path: "/browse",
         name: "Browse",
         component: Browse,
+    },
+    {
+        path: "/live/:uuid",
+        name: "Live",
+        component: LiveView,
     },
     {
         path: "/chat",

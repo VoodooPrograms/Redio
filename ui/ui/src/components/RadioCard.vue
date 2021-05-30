@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-bind:style="{backgroundImage: backImg}">
+  <div class="card" v-bind:style="{backgroundImage: backImg}" v-on:click="handleRedirect">
     <p class="card-title">Radio Europe #1</p>
     <div class="card-excerpt">
       <img src="@/assets/headphones.svg">
@@ -10,11 +10,18 @@
 </template>
 
 <script>
+import router from "@/routes";
+
 export default {
   name: "RadioCard",
   data() {
     return {
       backImg: `url(${require('@/assets/radio-card.png')})`
+    }
+  },
+  methods: {
+    handleRedirect() {
+      router.push({ name: 'Live', params: { uuid: 123 } });
     }
   }
 }
@@ -41,9 +48,6 @@ export default {
   cursor: pointer;
   filter: grayscale(0%);
   -webkit-filter: grayscale(0%);
-  /*transform: scale(1.1);*/
-  /*-webkit-transform: scale(1.1);*/
-  /*-moz-transform: scale(1.1);*/
 }
 
 .card .card-title {
