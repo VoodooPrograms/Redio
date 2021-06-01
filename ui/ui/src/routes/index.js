@@ -6,6 +6,7 @@ import EntryView from "@/views/EntryView";
 import Chat from "@/components/Chat";
 import Browse from "@/views/Browse";
 import LiveView from "@/views/LiveView";
+import DashboardView from "@/views/DashboardView";
 
 const routes = [
     {
@@ -32,6 +33,11 @@ const routes = [
         path: "/browse",
         name: "Browse",
         component: Browse,
+    },
+    {
+        path: "/dashboard",
+        name: "Dashboard",
+        component: DashboardView,
     },
     {
         path: "/live/:uuid",
