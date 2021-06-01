@@ -7,7 +7,9 @@
           <Tab title="Playlist">
             <Playlist></Playlist>
           </Tab>
-          <Tab title="Add Song">Add Song</Tab>
+          <Tab title="Add Song">
+            <AddSong></AddSong>
+          </Tab>
           <Tab title="Metrics">Metrics</Tab>
         </Tabs>
       </div>
@@ -22,10 +24,11 @@ import Tabs from "@/components/Tab/Tabs";
 import Tab from "@/components/Tab/Tab";
 import { ref } from "vue";
 import Playlist from "@/components/Playlist";
+import AddSong from "@/components/AddSong";
 
 export default {
   name: "DashboardView",
-  components: {Playlist , Navigation, Tabs, Tab},
+  components: {AddSong , Playlist , Navigation, Tabs, Tab},
   setup() {
     const active = ref(0);
 

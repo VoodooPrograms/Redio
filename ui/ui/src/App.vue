@@ -43,6 +43,12 @@ main {
   --bg-color: #0F0F0F;
 }
 
+::placeholder {
+  color: var(--primary-color);
+  font-style: italic;
+  opacity: 1;
+}
+
 @font-face {
   font-family: "Bahnschrift";
   src: url('./fonts/Bahnschrift/BAHNSCHRIFT.TTF');
