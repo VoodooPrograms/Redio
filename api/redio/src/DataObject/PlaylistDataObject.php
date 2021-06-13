@@ -2,6 +2,7 @@
 
 namespace App\DataObject;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class PlaylistDataObject extends DataObject
@@ -14,12 +15,7 @@ final class PlaylistDataObject extends DataObject
     /**
      * @Assert\NotBlank
      */
-    public ?int $user_id;
-
-    /**
-     * @Assert\NotBlank
-     */
-    public ?string $image_uri;
+    public ?UploadedFile $image_uri;
 
     /**
      * @Assert\NotBlank

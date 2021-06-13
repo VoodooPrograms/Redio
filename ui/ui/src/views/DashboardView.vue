@@ -4,36 +4,62 @@
     <div class="col-10">
       <div class="tabs-view">
         <Tabs v-model="active">
-          <Tab title="Playlist">
-            <Playlist></Playlist>
+          <Tab title="Lists of playlists">
+            <div v-if="!isFetching">
+              <div v-for="playlist in playlists" v-bind:key="playlist">
+                <p>{{ playlist.name }}</p>
+                <p>{{ playlist.image_uri }}</p>
+                <p>{{ playlist.tags }}</p>
+              </div>
+            </div>
           </Tab>
-          <Tab title="Add Song">
-            <AddSong></AddSong>
+          <Tab title="Add a playlist">
+            <AddPlaylist></AddPlaylist>
           </Tab>
-          <Tab title="Metrics">Metrics</Tab>
         </Tabs>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import authHeader from "@/services/auth-header";
 import Navigation from "@/components/Navigation";
-import Tabs from "@/components/Tab/Tabs";
 import Tab from "@/components/Tab/Tab";
+import Tabs from "@/components/Tab/Tabs";
 import { ref } from "vue";
-import Playlist from "@/components/Playlist";
-import AddSong from "@/components/AddSong";
+import AddPlaylist from "@/components/AddPlaylist";
 
 export default {
   name: "DashboardView",
-  components: {AddSong , Playlist , Navigation, Tabs, Tab},
+  components: {AddPlaylist , Navigation, Tabs, Tab},
   setup() {
     const active = ref(0);
 
     return { active };
   },
+  data() {
+    return {
+      playlists: [],
+      isFetching: true
+    }
+  },
+  created () {
+    this.fetchPlaylists()
+  },
+  methods: {
+    fetchPlaylists() {
+      axios({
+        method: 'get',
+        url: 'http://localhost:7000/api/playlists',
+        headers: authHeader()
+      }).then(response => {
+        this.playlists = response.data;
+        this.isFetching = false;
+      })
+    }
+  }
 }
 </script>
 

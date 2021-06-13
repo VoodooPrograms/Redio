@@ -3,7 +3,7 @@ export default function authHeader() {
 
     console.debug(user);
     if (user && user.token) {
-        return { Authorization: 'Bearer ' + user.token, 'Content-Type': 'application/json' };
+        return { Authorization: 'Bearer ' + user.token };
     } else {
         return {};
     }

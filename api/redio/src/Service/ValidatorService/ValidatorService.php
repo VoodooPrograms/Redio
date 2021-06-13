@@ -17,7 +17,14 @@ class ValidatorService implements ValidatorServiceInterface
 
     public function validate(Request $request, string $dtoClassName)
     {
-        $playlistDTO = new $dtoClassName(json_decode($request->getContent(), true));
+        if ($request->getContentType() === 'json') {
+            $playlistDTO = new $dtoClassName(json_decode($request->getContent(), true));
+        } else {
+            $playlistDTO = new $dtoClassName(array_merge(
+                $request->request->all(),
+                $request->files->all(),
+            ));
+        }
 
         $errors = $this->validator->validate($playlistDTO);
 
