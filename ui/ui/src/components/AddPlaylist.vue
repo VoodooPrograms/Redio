@@ -3,6 +3,7 @@
       <form class="add-playlist-form" @submit.prevent="handleAddPlaylist" enctype="multipart/form-data">
         <input type="text" v-model="playlist.name" placeholder="Playlist Name"/>
         <input type="file" id="file" ref="file" @change="uploadFile"/>
+        <TagInput :getTags="getTags"></TagInput>
         <Button class="message-submit" msg="Submit" color="primary-color"></Button>
       </form>
   </div>
@@ -12,23 +13,27 @@
 import Button from "@/components/Button";
 import axios from "axios";
 import authHeader from "@/services/auth-header";
+import TagInput from "@/components/TagsInput/TagInput";
 
 export default {
   name: "AddPlaylist",
-  components: {Button},
+  components: {Button, TagInput},
   data() {
     return {
       files: null,
       playlist: {
         name: '',
         image: '',
-        tags: ['tag1', 'tag2']
+        tags: []
       },
     }
   },
   methods: {
     uploadFile(event) {
       this.files = event.target.files;
+    },
+    getTags(tags) {
+      this.playlist.tags = tags;
     },
     handleAddPlaylist() {
       let data = new FormData();
@@ -50,5 +55,20 @@ export default {
 </script>
 
 <style scoped>
+
+.add-playlist-form {
+  display: block;
+}
+
+.add-playlist-form > input {
+  width: 100%;
+  margin: 10px 0;
+  background-color: var(--bg-color);
+  border: none;
+  line-height: 30px;
+  color: var(--white);
+}
+
+
 
 </style>
