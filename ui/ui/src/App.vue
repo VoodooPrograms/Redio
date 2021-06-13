@@ -49,6 +49,10 @@ main {
   opacity: 1;
 }
 
+a {
+  text-decoration: none;
+}
+
 @font-face {
   font-family: "Bahnschrift";
   src: url('./fonts/Bahnschrift/BAHNSCHRIFT.TTF');

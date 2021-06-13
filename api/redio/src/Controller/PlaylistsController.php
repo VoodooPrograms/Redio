@@ -40,11 +40,21 @@ class PlaylistsController extends AbstractController
      *     description="Returns the collection of playlists"
      * )
      * @SWG\Tag(name="playlists")
+     *
+     * @param Request $request
+     * @return Response
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $playlists = $this->playlistService->getAll();
+
+        array_map(
+            fn($playlist) => $playlist->setImageUri($request->getSchemeAndHttpHost() . '/storage/photo/' . $playlist->getImageUri()),
+            $playlists
+        );
+
         return new Response(
-            $this->serializer->serialize($this->playlistService->getAll(), 'json', ['groups' => 'index']),
+            $this->serializer->serialize($playlists, 'json', ['groups' => 'index']),
             Response::HTTP_OK
         );
     }

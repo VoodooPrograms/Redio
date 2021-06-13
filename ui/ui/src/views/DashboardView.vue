@@ -6,10 +6,16 @@
         <Tabs v-model="active">
           <Tab title="Lists of playlists">
             <div v-if="!isFetching">
-              <div v-for="playlist in playlists" v-bind:key="playlist">
-                <p>{{ playlist.name }}</p>
-                <p>{{ playlist.image_uri }}</p>
-                <p>{{ playlist.tags }}</p>
+              <div v-for="playlist in playlists" v-bind:key="playlist" class="playlist">
+                  <img :src="playlist.image_uri" />
+                  <div class="playlist-info">
+                    <router-link :to="{ name: 'Playlist', params: { id: playlist.id }}">
+                      <p class="playlist-title">{{ playlist.name }}</p>
+                    </router-link>
+                    <div class="playlist-tags">
+                      <span class="playlist-tag" v-for="tag in playlist.tags" v-bind:key="tag">{{ tag }}</span>
+                    </div>
+                  </div>
               </div>
             </div>
           </Tab>
@@ -76,6 +82,39 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.playlist {
+  display: flex;
+  width: 500px;
+  margin: 20px 0;
+}
+
+.playlist-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.playlist-info .playlist-title {
+  font-weight: bold;
+  font-size: 18px;
+  color: var(--white);
+}
+
+.playlist-info .playlist-tags {
+  display: inline-block;
+}
+
+.playlist-info .playlist-tags .playlist-tag {
+  font-size: 14px;
+  background-color: var(--grey);
+  border-radius: 5px;
+  padding: 4px;
+  margin: 2px 5px;
+}
+
+.playlist img {
+  width: 200px;
 }
 
 @media only screen and (max-width: 768px) {

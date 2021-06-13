@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       song: {
-        playlist_id: 1,
+        playlist_id: this.$route.params.id,
         yt_uri: ''
       },
       photos: {
