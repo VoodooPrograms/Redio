@@ -8,26 +8,30 @@ use App\Entity\Song;
 use App\Repository\PlaylistRepository;
 use App\Repository\SongRepository;
 use App\Repository\UserRepository;
+use App\Service\YoutubeService\YoutubeServiceInterface;
 
 class SongService implements SongServiceInterface
 {
     protected SongRepository $repo;
     protected PlaylistRepository $playlistRepo;
     protected UserRepository $userRepo;
+    protected YoutubeServiceInterface $youtubeService;
 
     public function __construct(
         SongRepository $repo,
         PlaylistRepository $playlistRepo,
-        UserRepository $userRepo
+        UserRepository $userRepo,
+        YoutubeServiceInterface $youtubeService
     ) {
         $this->repo = $repo;
         $this->playlistRepo = $playlistRepo;
         $this->userRepo = $userRepo;
+        $this->youtubeService = $youtubeService;
     }
 
-    public function getAll()
+    public function getAll(int $playlistId)
     {
-        return $this->repo->findAll();
+        return $this->repo->findBy(['playlist_id' => $playlistId]);
     }
 
     public function getById(int $id): ?Song

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DataObject\SongDataObject;
+use App\Entity\Song;
 use App\Service\SongService\SongServiceInterface;
 use App\Service\ValidatorService\ValidatorServiceInterface;
 use Swagger\Annotations as SWG;
@@ -34,18 +35,25 @@ class SongController extends AbstractController
     }
 
     /**
-     * @Route("/api/song", name="song.index", methods="GET")
+     * @Route("/api/song/{playlistId}", name="song.index", methods="GET")
      *
      * @SWG\Response(
      *     response=200,
      *     description="Returns the collection of songs"
      * )
      * @SWG\Tag(name="song")
+     *
+     * @param int $playlistId
+     * @return Response
      */
-    public function index(): Response
+    public function index(int $playlistId): Response
     {
+        $songs = $this->songService->getAll($playlistId);
+
+        array_map(fn(Song $song) => $song->setYtUri('https://img.youtube.com/vi/' . $song->getYtUri() . '/0.jpg'), $songs);
+
         return new Response(
-            $this->serializer->serialize($this->songService->getAll(), 'json', ['groups' => 'index']),
+            $this->serializer->serialize($songs, 'json', ['groups' => 'index']),
             Response::HTTP_OK
         );
     }
@@ -71,6 +79,7 @@ class SongController extends AbstractController
      */
     public function show(int $song_id): Response
     {
+        dd(getenv());
         $song = $this->songService->getById($song_id);
 
         return new Response(

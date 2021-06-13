@@ -1,26 +1,40 @@
 <template>
-  <div class="song-card" v-for="item in items" v-bind:key="item">
-    <img :src="item.imgSrc">
+  <div class="song-card" v-for="song in songs" v-bind:key="song">
+    <img :src="song.yt_uri">
     <div>
-      <p class="song-card-author">{{ item.author }}</p>
-      <p class="song-card-songname">{{ item.song }}</p>
+      <p class="song-card-author">{{ song.author }}</p>
+      <p class="song-card-songname">{{ song.song }}</p>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import authHeader from "@/services/auth-header";
+
 export default {
   name: "Playlist",
   data() {
     return {
-      items: [
-        {imgSrc: '../assets/stonedjesus.png' , author: 'Stoned Jesus' , song: 'I am the mountain'} ,
-        {imgSrc: '../assets/stonedjesus.png' , author: 'Stoned Jesus' , song: 'I am the mountain'} ,
-        {imgSrc: '../assets/stonedjesus.png' , author: 'Stoned Jesus' , song: 'I am the mountain'} ,
-        {imgSrc: '../assets/stonedjesus.png' , author: 'Stoned Jesus' , song: 'I am the mountain'} ,
-        {imgSrc: '../assets/stonedjesus.png' , author: 'Stoned Jesus' , song: 'I am the mountain'} ,
-        {imgSrc: '../assets/stonedjesus.png' , author: 'Stoned Jesus' , song: 'I am the mountain'} ,
-      ]
+      playlist_id: this.$route.params.id,
+      songs: []
+    }
+  },
+  created () {
+    if (this.playlist_id !== null) {
+      this.fetchSongs()
+    }
+  },
+  methods: {
+    fetchSongs() {
+      axios({
+        method: 'get',
+        url: 'http://localhost:7000/api/song/' + this.playlist_id,
+        headers: authHeader()
+      }).then(response => {
+        this.songs = response.data;
+        this.isFetching = false;
+      })
     }
   }
 }

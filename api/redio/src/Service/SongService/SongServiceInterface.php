@@ -7,7 +7,7 @@ use App\Entity\Song;
 
 interface SongServiceInterface
 {
-    public function getAll();
+    public function getAll(int $playlistId);
 
     public function getById(int $id): ?Song;
 

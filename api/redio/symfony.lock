@@ -144,6 +144,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "madcoda/php-youtube-api": {
+        "version": "v1.2.5"
+    },
     "namshi/jose": {
         "version": "7.2.3"
     },
