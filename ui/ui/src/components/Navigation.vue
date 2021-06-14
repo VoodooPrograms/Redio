@@ -7,6 +7,7 @@
     <div class="button-list">
       <router-link to="/browse">Browse</router-link>
       <router-link to="/dashboard">Dashboard</router-link>
+      <a href="#" v-if="isAuthorized" @click.prevent="handleLogout">Logout</a>
     </div>
   </nav>
   <div id="menu-button" @click="handleHamburger">
@@ -19,12 +20,17 @@ export default {
   name: "Navigation",
   data() {
     return {
-      open: false
+      open: false,
+      isAuthorized: localStorage.getItem("user")
     };
   },
   methods: {
     handleHamburger() {
       this.open = !this.open;
+    },
+    handleLogout() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push('/login');
     }
   }
 }
