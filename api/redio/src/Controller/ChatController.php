@@ -8,9 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ChatController extends AbstractController
 {
+    protected UserInterface $user;
+
+    public function __construct(TokenStorageInterface $tokenStorage)
+    {
+        $this->user = $tokenStorage->getToken()->getUser();
+    }
+
     /**
      * @Route("/push", name="push")
      * @param Request $request
@@ -23,7 +32,7 @@ class ChatController extends AbstractController
         $result = $publisher->publish(
             new Update(
                 'https://example.com/chat',
-                json_encode(['message' => $message],
+                json_encode(['user' => $this->user->getUsername(), 'message' => $message],
             )
         ));
 

@@ -2,7 +2,8 @@
 
   <div class="chat-list">
     <div class="chat-element" v-for="m in messages" v-bind:key="m">
-      {{ m.message }}
+      <span class="chat-element-user">{{ m.user }}</span>
+      <span>: {{ m.message }}</span>
     </div>
     <form class="message-form" @submit.prevent="handleSendMessage">
       <div class="user-box">
@@ -23,6 +24,7 @@
 import Button from "@/components/Button";
 import Message from "@/models/message";
 import {HTTP} from "@/services/http.service";
+import authHeader from "@/services/auth-header";
 
 export default {
   name: "Chat",
@@ -53,7 +55,8 @@ export default {
       HTTP.get('/push', {
             params: {
               message: this.chat.message
-            }
+            },
+            headers: authHeader()
           })
           .then(response => (this.info = response))
       }
@@ -70,8 +73,13 @@ export default {
   position: relative;
 }
 
+.chat-element .chat-element-user {
+  font-weight: bold;
+}
+
 .chat-list .chat-element {
   color: var(--white);
+  padding: 3px 5px;
 }
 
 .message-form {
