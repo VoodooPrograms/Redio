@@ -37,6 +37,11 @@ class Song
      */
     private $file_uri;
 
+    /**
+     * @ORM\OneToOne(targetEntity=SongData::class, mappedBy="song", cascade={"persist", "remove"})
+     */
+    private $songData;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -81,6 +86,28 @@ class Song
     public function setFileUri(?string $file_uri): self
     {
         $this->file_uri = $file_uri;
+
+        return $this;
+    }
+
+    public function getSongData(): ?SongData
+    {
+        return $this->songData;
+    }
+
+    public function setSongData(?SongData $songData): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($songData === null && $this->songData !== null) {
+            $this->songData->setSong(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($songData !== null && $songData->getSong() !== $this) {
+            $songData->setSong($this);
+        }
+
+        $this->songData = $songData;
 
         return $this;
     }
