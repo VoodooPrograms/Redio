@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SongDataRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=SongDataRepository::class)
@@ -19,16 +20,19 @@ class SongData
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"index"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"index"})
      */
     private $author;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"index"})
      */
     private $poster;
 

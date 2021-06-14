@@ -25,6 +25,7 @@ export default {
 
 body {
   margin: 0 auto;
+  background-color: black;
 }
 
 main {

@@ -35,7 +35,7 @@ class SongController extends AbstractController
     }
 
     /**
-     * @Route("/api/song/{playlistId}", name="song.index", methods="GET")
+     * @Route("/api/songs/{playlistId}", name="songs.index", methods="GET")
      *
      * @SWG\Response(
      *     response=200,
@@ -79,7 +79,6 @@ class SongController extends AbstractController
      */
     public function show(int $song_id): Response
     {
-        dd(getenv());
         $song = $this->songService->getById($song_id);
 
         return new Response(

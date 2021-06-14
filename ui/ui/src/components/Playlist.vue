@@ -2,8 +2,8 @@
   <div class="song-card" v-for="song in songs" v-bind:key="song">
     <img :src="song.yt_uri">
     <div>
-      <p class="song-card-author">{{ song.author }}</p>
-      <p class="song-card-songname">{{ song.song }}</p>
+      <p class="song-card-author">{{ song.songData.author }}</p>
+      <p class="song-card-songname">{{ song.songData.title }}</p>
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
     fetchSongs() {
       HTTP.request({
         method: 'get',
-        url: '/api/song/' + this.playlist_id,
+        url: '/api/songs/' + this.playlist_id,
         headers: authHeader()
       }).then(response => {
         this.songs = response.data;
@@ -48,6 +48,17 @@ export default {
 }
 
 .song-card img {
+  width: 300px;
+}
+
+.song-card .song-card-author {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+.song-card .song-card-songname {
+  font-size: 14px;
 }
 
 .song-card div{

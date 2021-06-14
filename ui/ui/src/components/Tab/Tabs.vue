@@ -67,6 +67,7 @@ ul.tabs__header > li {
   cursor: pointer;
   text-align: center;
   flex: 1;
+  min-width: 300px;
 }
 
 ul.tabs__header > li.tab__selected {

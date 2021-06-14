@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\SongData;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +21,20 @@ class SongDataRepository extends ServiceEntityRepository
         parent::__construct($registry, SongData::class);
     }
 
-    // /**
-    //  * @return SongData[] Returns an array of SongData objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function save(SongData $songDataEntity): ?SongData
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        try {
+            $this->getEntityManager()->persist($songDataEntity);
+            $this->getEntityManager()->flush();
+        } catch (ORMException|OptimisticLockException $e) {
+            return null;
+        }
+        return $songDataEntity;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?SongData
+    public function delete(SongData $song): void
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $this->getEntityManager()->remove($song);
+        $this->getEntityManager()->flush();
     }
-    */
 }

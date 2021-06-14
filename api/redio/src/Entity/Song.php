@@ -38,7 +38,8 @@ class Song
     private $file_uri;
 
     /**
-     * @ORM\OneToOne(targetEntity=SongData::class, mappedBy="song", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=SongData::class, mappedBy="song", cascade={"persist", "remove"})\
+     * @Groups({"index"})
      */
     private $songData;
 
