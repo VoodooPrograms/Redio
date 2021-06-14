@@ -53,6 +53,20 @@ a {
   text-decoration: none;
 }
 
+/* nprogress */
+#nprogress .bar {
+  background: var(--primary-color) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--primary-color), 0 0 5px var(--primary-color) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--primary-color) !important;
+  border-left-color: var(--primary-color) !important;
+}
+
 @font-face {
   font-family: "Bahnschrift";
   src: url('./fonts/Bahnschrift/BAHNSCHRIFT.TTF');

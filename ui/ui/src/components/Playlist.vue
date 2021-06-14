@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import axios from "axios";
 import authHeader from "@/services/auth-header";
+import {HTTP} from "@/services/http.service";
 
 export default {
   name: "Playlist",
@@ -27,9 +27,9 @@ export default {
   },
   methods: {
     fetchSongs() {
-      axios({
+      HTTP.request({
         method: 'get',
-        url: 'http://localhost:7000/api/song/' + this.playlist_id,
+        url: '/api/song/' + this.playlist_id,
         headers: authHeader()
       }).then(response => {
         this.songs = response.data;

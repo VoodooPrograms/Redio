@@ -25,7 +25,7 @@
 
 <script>
 import Button from "@/components/Button";
-import axios from "axios";
+import {HTTP} from "@/services/http.service";
 import authHeader from "@/services/auth-header";
 
 export default {
@@ -46,9 +46,9 @@ export default {
   methods: {
     handleAddSong() {
       let data = this.song;
-      axios({
+      HTTP.request({
         method: 'post',
-        url: 'http://localhost:7000/api/song',
+        url: '/api/song',
         headers: authHeader(),
         data: data
       }).then(response => (this.info = response))

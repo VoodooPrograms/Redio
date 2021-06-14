@@ -11,9 +11,9 @@
 
 <script>
 import Button from "@/components/Button";
-import axios from "axios";
 import authHeader from "@/services/auth-header";
 import TagInput from "@/components/TagsInput/TagInput";
+import {HTTP} from "@/services/http.service";
 
 export default {
   name: "AddPlaylist",
@@ -43,9 +43,9 @@ export default {
         data.append('tags[]', this.playlist.tags[i]);
       }
 
-      axios({
+      HTTP.request({
         method: 'post' ,
-        url: 'http://localhost:7000/api/playlists',
+        url: '/api/playlists',
         headers: authHeader(),
         data: data
       }).then(response => (this.info = response))

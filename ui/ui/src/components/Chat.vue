@@ -22,7 +22,7 @@
 <script>
 import Button from "@/components/Button";
 import Message from "@/models/message";
-import axios from "axios";
+import {HTTP} from "@/services/http.service";
 
 export default {
   name: "Chat",
@@ -50,8 +50,7 @@ export default {
     },
     handleSendMessage() {
       console.log(this.chat);
-      axios
-          .get('http://localhost:7000/push', {
+      HTTP.get('/push', {
             params: {
               message: this.chat.message
             }

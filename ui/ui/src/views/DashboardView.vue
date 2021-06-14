@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import {HTTP} from "@/services/http.service";
 import authHeader from "@/services/auth-header";
 import Navigation from "@/components/Navigation";
 import Tab from "@/components/Tab/Tab";
@@ -56,9 +56,9 @@ export default {
   },
   methods: {
     fetchPlaylists() {
-      axios({
+      HTTP.request({
         method: 'get',
-        url: 'http://localhost:7000/api/playlists',
+        url: '/api/playlists',
         headers: authHeader()
       }).then(response => {
         this.playlists = response.data;
