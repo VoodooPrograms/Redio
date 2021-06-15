@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     app.mercure_jwt_secret: '%env(MERCURE_JWT_SECRET)%'
+    app.youtube_api_key: '%env(YT_API_V3_KEY)%'
+    app.directory.photo_storage: '%kernel.project_dir%/public/storage/photo'
 
 services:
     # default configuration for services in *this* file
@@ -30,3 +32,16 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\FileUploader\FileUploader:
+        arguments:
+            $targetDirectory: '%app.directory.photo_storage%'
+
+    youtubeApi.youtube:
+        class: Madcoda\Youtube\Youtube
+        arguments:
+            - {key: '%app.youtube_api_key%'}
+
+    App\Service\YoutubeService\YoutubeService:
+        arguments:
+            $client: '@youtubeApi.youtube'

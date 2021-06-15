@@ -144,6 +144,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "madcoda/php-youtube-api": {
+        "version": "v1.2.5"
+    },
     "namshi/jose": {
         "version": "7.2.3"
     },
@@ -345,6 +348,9 @@
             "config/packages/mercure.yaml"
         ]
     },
+    "symfony/mime": {
+        "version": "v5.2.10"
+    },
     "symfony/options-resolver": {
         "version": "v5.2.4"
     },
@@ -353,6 +359,9 @@
     },
     "symfony/polyfill-intl-grapheme": {
         "version": "v1.22.0"
+    },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.23.0"
     },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.22.0"

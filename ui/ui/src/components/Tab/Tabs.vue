@@ -53,7 +53,8 @@ export default {
 
 <style scoped>
 ul.tabs__header {
-  display: block;
+  display: flex;
+  align-items: stretch;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -65,7 +66,8 @@ ul.tabs__header > li {
   margin: 0;
   cursor: pointer;
   text-align: center;
-  width: 250px;
+  flex: 1;
+  min-width: 300px;
 }
 
 ul.tabs__header > li.tab__selected {

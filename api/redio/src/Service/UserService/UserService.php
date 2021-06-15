@@ -35,6 +35,7 @@ class UserService implements UserServiceInterface
         $user = new User();
         $user->setEmail($data->email);
         $user->setPassword($this->passwordEncoder->encodePassword($user, $data->password));
+        $user->setNickname($data->nickname);
         return $this->repo->save($user);
     }
 
@@ -48,6 +49,7 @@ class UserService implements UserServiceInterface
         $user = $this->repo->find($userId);
         $user->setEmail($data->email);
         $user->setPassword($this->passwordEncoder->encodePassword($user, $data->password));
+        $user->setNickname($data->nickname);
         return $this->repo->save($user);
     }
 }

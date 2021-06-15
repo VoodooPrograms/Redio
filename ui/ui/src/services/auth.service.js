@@ -10,7 +10,6 @@ class AuthService {
                 password: user.password
             })
             .then(response => {
-                console.debug(response);
                 if (response.data.token) {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
@@ -20,14 +19,12 @@ class AuthService {
     }
 
     logout() {
-        console.log("HEJO")
         localStorage.removeItem('user');
     }
 
     register(user) {
-        console.log("Register");
         return axios.post(API_URL + 'register', {
-            username: user.username,
+            nickname: user.username,
             email: user.email,
             password: user.password
         });

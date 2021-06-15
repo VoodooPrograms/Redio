@@ -1,11 +1,10 @@
 <template>
-  <div class="card" v-bind:style="{backgroundImage: backImg}" v-on:click="handleRedirect">
-    <p class="card-title">Radio Europe #1</p>
+  <div class="card" v-bind:style="{backgroundImage: 'url(' + backImg + ')'}" v-bind:data-uuid="uuid" v-on:click="handleRedirect">
+    <p class="card-title">{{ title }}</p>
     <div class="card-excerpt">
       <img src="@/assets/headphones.svg">
       <span>86</span>
     </div>
-<!--    <img src="@/assets/radio-card.png" class="bg-card"/>-->
   </div>
 </template>
 
@@ -16,12 +15,17 @@ export default {
   name: "RadioCard",
   data() {
     return {
-      backImg: `url(${require('@/assets/radio-card.png')})`
+      // backImg: `url(${require('@/assets/radio-card.png')})`
     }
+  },
+  props: {
+    title: String,
+    backImg: String,
+    uuid: Number,
   },
   methods: {
     handleRedirect() {
-      router.push({ name: 'Live', params: { uuid: 123 } });
+      router.push({ name: 'Live', params: { uuid: event.target.getAttribute('data-uuid') } });
     }
   }
 }
@@ -43,7 +47,9 @@ export default {
   background-size: cover;
   filter: grayscale(100%);
   -webkit-filter: grayscale(100%);
+  box-shadow: inset 300px 0 200px 20px black;
 }
+
 .card:hover {
   cursor: pointer;
   filter: grayscale(0%);

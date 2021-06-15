@@ -73,13 +73,13 @@ export default {
       this.message = '';
       this.submitted = true;
       console.debug(this.user);
-          this.$store.dispatch('auth/register', this.user).then(
-              data => {
-                this.message = data.message;
-                this.successful = true;
-              }
-          );
-        }
+      this.$store.dispatch('auth/register', this.user).then(
+          data => {
+            this.message = data.message;
+            this.successful = true;
+          }
+      );
+    }
   }
 };
 </script>

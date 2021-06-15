@@ -2,7 +2,8 @@
 
   <div class="chat-list">
     <div class="chat-element" v-for="m in messages" v-bind:key="m">
-      {{ m.message }}
+      <span class="chat-element-user">{{ m.user }}</span>
+      <span>: {{ m.message }}</span>
     </div>
     <form class="message-form" @submit.prevent="handleSendMessage">
       <div class="user-box">
@@ -22,13 +23,15 @@
 <script>
 import Button from "@/components/Button";
 import Message from "@/models/message";
-import axios from "axios";
+import {HTTP} from "@/services/http.service";
+import authHeader from "@/services/auth-header";
 
 export default {
   name: "Chat",
   components: {Button},
   data() {
     return {
+      uuid: this.$route.params.uuid,
       messages: [],
       chat: new Message(''),
     }
@@ -38,23 +41,23 @@ export default {
   },
   methods: {
     setupStream() {
-      const eventSource = new EventSource('http://localhost:9090/.well-known/mercure?topic=' + encodeURIComponent('https://example.com/chat'));
+      const eventSource = new EventSource(
+          'http://localhost:9090/.well-known/mercure?topic=' + encodeURIComponent('https://example.com/chat/' + this.uuid.toString())
+      );
       console.log("Connected...");
       eventSource.onmessage = event => {
-        console.log(JSON.parse(event.data));
         let data = JSON.parse(event.data);
-        console.log(this.messages);
         this.messages.push(data);
-        if (this.messages.length > 20) this.messages.shift();
+        if (this.messages.length > 10) this.messages.shift();
       }
     },
     handleSendMessage() {
-      console.log(this.chat);
-      axios
-          .get('http://localhost:7000/push', {
+      HTTP.get('/push', {
             params: {
-              message: this.chat.message
-            }
+              message: this.chat.message,
+              topic: this.uuid
+            },
+            headers: authHeader()
           })
           .then(response => (this.info = response))
       }
@@ -71,8 +74,13 @@ export default {
   position: relative;
 }
 
+.chat-element .chat-element-user {
+  font-weight: bold;
+}
+
 .chat-list .chat-element {
   color: var(--white);
+  padding: 3px 5px;
 }
 
 .message-form {
