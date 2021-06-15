@@ -46,15 +46,12 @@ export default {
       );
       console.log("Connected...");
       eventSource.onmessage = event => {
-        console.log(JSON.parse(event.data));
         let data = JSON.parse(event.data);
-        console.log(this.messages);
         this.messages.push(data);
         if (this.messages.length > 10) this.messages.shift();
       }
     },
     handleSendMessage() {
-      console.log(this.chat);
       HTTP.get('/push', {
             params: {
               message: this.chat.message,
