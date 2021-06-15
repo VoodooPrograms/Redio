@@ -35,7 +35,7 @@ class UserDataObject extends DataObject
      *      minMessage = "Your password must be at least {{ limit }} characters long",
      *      maxMessage = "Your password cannot be longer than {{ limit }} characters"
      * )
-     * @UniqueValueInEntity(entityClass="App\Entity\User", field="$nickname")
+     * @UniqueValueInEntity(entityClass="App\Entity\User", field="nickname")
      */
     public ?string $nickname;
 }

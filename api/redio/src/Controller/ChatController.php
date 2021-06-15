@@ -32,7 +32,7 @@ class ChatController extends AbstractController
         $result = $publisher->publish(
             new Update(
                 'https://example.com/chat/' . $request->query->get('topic'),
-                json_encode(['user' => $this->user->getUsername(), 'message' => $message],
+                json_encode(['user' => $this->user->getNickname(), 'message' => $message],
             )
         ));
 
