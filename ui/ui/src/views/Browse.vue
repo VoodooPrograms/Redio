@@ -2,14 +2,11 @@
   <div class="grid-container">
     <Navigation></Navigation>
     <div class="col-10">
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
-      <RadioCard></RadioCard>
+      <RadioCard v-for="playlist in playlists" :key="playlist"
+                 :title="playlist.name"
+                 :uuid="playlist.id"
+                 :back-img="playlist.image_uri">
+      </RadioCard>
     </div>
 
   </div>
@@ -18,10 +15,33 @@
 <script>
 import Navigation from "@/components/Navigation";
 import RadioCard from "@/components/RadioCard";
+import {HTTP} from "@/services/http.service";
+import authHeader from "@/services/auth-header";
 
 export default {
   name: "Browse",
-  components: {RadioCard , Navigation}
+  components: {RadioCard , Navigation},
+  data() {
+    return {
+      playlists: [],
+      isFetching: true
+    }
+  },
+  created () {
+    this.fetchPlaylists()
+  },
+  methods: {
+    fetchPlaylists() {
+      HTTP.request({
+        method: 'get',
+        url: '/api/playlists',
+        headers: authHeader()
+      }).then(response => {
+        this.playlists = response.data;
+        this.isFetching = false;
+      })
+    }
+  }
 }
 </script>
 

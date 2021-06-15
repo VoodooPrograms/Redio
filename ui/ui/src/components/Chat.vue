@@ -31,6 +31,7 @@ export default {
   components: {Button},
   data() {
     return {
+      uuid: this.$route.params.uuid,
       messages: [],
       chat: new Message(''),
     }
@@ -40,21 +41,24 @@ export default {
   },
   methods: {
     setupStream() {
-      const eventSource = new EventSource('http://localhost:9090/.well-known/mercure?topic=' + encodeURIComponent('https://example.com/chat'));
+      const eventSource = new EventSource(
+          'http://localhost:9090/.well-known/mercure?topic=' + encodeURIComponent('https://example.com/chat/' + this.uuid.toString())
+      );
       console.log("Connected...");
       eventSource.onmessage = event => {
         console.log(JSON.parse(event.data));
         let data = JSON.parse(event.data);
         console.log(this.messages);
         this.messages.push(data);
-        if (this.messages.length > 20) this.messages.shift();
+        if (this.messages.length > 10) this.messages.shift();
       }
     },
     handleSendMessage() {
       console.log(this.chat);
       HTTP.get('/push', {
             params: {
-              message: this.chat.message
+              message: this.chat.message,
+              topic: this.uuid
             },
             headers: authHeader()
           })

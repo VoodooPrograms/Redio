@@ -31,7 +31,7 @@ class ChatController extends AbstractController
         $message = $request->query->get('message');
         $result = $publisher->publish(
             new Update(
-                'https://example.com/chat',
+                'https://example.com/chat/' . $request->query->get('topic'),
                 json_encode(['user' => $this->user->getUsername(), 'message' => $message],
             )
         ));
